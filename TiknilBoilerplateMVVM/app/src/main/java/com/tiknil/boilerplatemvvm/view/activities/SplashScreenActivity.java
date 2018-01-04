@@ -1,6 +1,11 @@
 package com.tiknil.boilerplatemvvm.view.activities;
 
+import com.tiknil.boilerplatemvvm.BR;
+import com.tiknil.boilerplatemvvm.R;
 import com.tiknil.boilerplatemvvm.viewmodel.AbstractBaseViewModel;
+import com.tiknil.boilerplatemvvm.viewmodel.SplashScreenViewModel;
+
+import javax.inject.Inject;
 
 /**
  * Activity che implementa la splashscreen
@@ -17,6 +22,10 @@ public class SplashScreenActivity extends AbstractBaseActivity {
 
 
     //region Instance Fields
+
+    @Inject
+    SplashScreenViewModel viewModel;
+
     //endregion
 
 
@@ -45,18 +54,18 @@ public class SplashScreenActivity extends AbstractBaseActivity {
     //region Override methods and callbacks
 
     @Override
-    public AbstractBaseViewModel getViewModel() {
-        return null;
+    public SplashScreenViewModel getViewModel() {
+        return viewModel;
     }
 
     @Override
     public int getBindingVariable() {
-        return 0;
+        return BR.viewModel;
     }
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.activity_splashscreen;
     }
 
     //endregion
