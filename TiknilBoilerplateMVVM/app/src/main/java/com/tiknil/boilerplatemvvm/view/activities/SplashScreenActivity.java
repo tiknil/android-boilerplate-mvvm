@@ -2,7 +2,6 @@ package com.tiknil.boilerplatemvvm.view.activities;
 
 import com.tiknil.boilerplatemvvm.BR;
 import com.tiknil.boilerplatemvvm.R;
-import com.tiknil.boilerplatemvvm.viewmodel.AbstractBaseViewModel;
 import com.tiknil.boilerplatemvvm.viewmodel.SplashScreenViewModel;
 
 import javax.inject.Inject;

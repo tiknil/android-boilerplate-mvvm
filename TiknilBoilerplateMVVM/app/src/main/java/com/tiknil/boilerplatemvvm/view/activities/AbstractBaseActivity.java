@@ -21,6 +21,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import dagger.android.AndroidInjection;
+import timber.log.Timber;
 
 /**
  * Classe astratta di base ereditata da tutte le activity che raggruppa le funzionalità comuni

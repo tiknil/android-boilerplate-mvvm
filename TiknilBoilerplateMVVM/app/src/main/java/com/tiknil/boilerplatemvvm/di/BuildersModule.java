@@ -17,4 +17,5 @@ public abstract class BuildersModule {
     @ContributesAndroidInjector(modules = {ViewModelModule.class})
     abstract SplashScreenActivity contributeSplashScreenActivityInjector();
 
+    // Fragment
 }
