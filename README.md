@@ -2,6 +2,25 @@
 
 Il boilerplate contiene un app base Android che implementa l'architettura MVVM usando Dagger2, RxJava e Android Databinding.
 
+## Getting Started
+
+Il boilerplate contiene il file ruby `boilerplatemvvm.rb` che permette di creare un nuovo progetto a partire dal boilerplate fornendo le principali informazioni per l'inizializzazione. Di seguito le istruzioni:
+
+1. Entra nella cartella di questo repo
+2. Rendi lo script `boilerplatemvvm.rb` eseguibile
+   ```
+    chmod +x boilerplatemvvm.rb
+   ```    
+3. Quindi eseguilo
+   ```
+   ./boilerplatemvvm.rb
+   ```
+4. Puoi dargli direttamente i parametri seguenti:
+   a. `-n`/`--name` Nome del progetto (es: ProjectName)
+   b. `-p`/`--package` Package name (es: com.tiknil.projectname)
+5. Oppure:
+   `-h`/`--help` Per visualizzare l'help
+
 ## Design pattern
 
 ### Il pattern Model-View-ViewModel
@@ -35,25 +54,6 @@ L'utilizzo della *DI* è molto utile per la realizzazione di test automatici, in
 References:
 - [Semplice video che chiarisce il concetto di DI](https://www.youtube.com/watch?v=IKD2-MAkXyQ)
 
-### Getting Started
-
-Il boilerplate contiene il file ruby `boilerplatemvvm.rb` che permette di creare un nuovo progetto a partire dal boilerplate fornendo le principali informazioni per l'inizializzazione. Di seguito le istruzioni:
-
-1. Entra nella cartella di questo repo
-2. Rendi lo script `boilerplatemvvm.rb` eseguibile
-   ```
-    chmod +x boilerplatemvvm.rb
-   ```    
-3. Quindi eseguilo
-   ```
-   ./boilerplatemvvm.rb
-   ```
-4. Puoi dargli direttamente i parametri seguenti:
-   a. `-n`/`--name` Nome del progetto (es: ProjectName)
-   b. `-p`/`--package` Package name (es: com.tiknil.projectname)
-5. Oppure:
-   `-h`/`--help` Per visualizzare l'help
-
 ## Struttura del progetto
 
 Definiamo in questo capitolo le best practices di Tiknil per l'impostazione del boilerplate **TiknilBoilerplateMVVM**.
@@ -65,7 +65,7 @@ Nel boilerplate corrente è presente l'implementazione di un esempio di implemen
 - `view.activities.SplashScreenActivity.java` che rappresente la *View*, essa contiene il riferimento al viewmodel injettato tramite l'annotation `@Inject`. Tutte le activity devono estendere la `AbstractBaseActivity`; in egual modo tutti i fragment dovranno estendere l'`AbstractBaseFragment`.
 - `model.BaseModel` è la classe dedicata all'implementazioni della parte Model del pattern, in base ai modelli richiesti del contesto essa verrà implementata di conseguenza. Tutti i model devono estendere il `BaseModel`.
 
-#### Databinding
+### Databinding
 
 L'utilizzo dell'android-databinding all'interno del viewmodel di un activity (o di un fragment) è vincolato alla specifica, all'interno del file `layout` relativo, del tag `layout` e `data` come definito di seguito:
 
@@ -99,13 +99,13 @@ Dove `variable.name` è il nome assegnato al viewModel di tipo `variable.type`, 
 
 Per ulteriori dettagli in merito all'android-databinding rimandiamo alla documentazione ufficiale: [Data Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html).
 
-##### ObservableFields
+#### ObservableFields
 
 Tra gli *observable data object* disponibili, quelli utilizzati nel nostro pattern sono gli`ObservableFields` e i suoi simili `ObservableBoolean`, `ObservableInt`,...  che permettono al binding di collegare un listener all'oggetto associato per ascoltare le modifiche delle proprietà su quell'oggetto.
 
 A questo link si può trovare la documentazione: [Data Object](https://developer.android.com/topic/libraries/data-binding/index.html#data_objects)
 
-###### Dichiarazione e utilizzo di un Observable
+##### Dichiarazione e utilizzo di un Observable
 
 La dichiarazione degli Observable all'interno del viewmodel è la seguente:
 
@@ -117,7 +117,7 @@ public ObservableField<String> nameText = new ObservableField<>("Mario Rossi");
 public ObservableBoolean isHidden = new ObservableBoolean(true);
 ```
 
-###### Binding Dato => UI
+##### Binding Dato => UI
 
 Implementato tramite android-databing utilizzando gli oggetti di tipo `Observable`. Essi infatti hanno il metodo `set` che consente di modificare il contenuto di una proprietà e apportare il cambiamento sulla UI.
 ```Java
@@ -128,7 +128,7 @@ nameText.set("Luigi Verdi");
 isHidden.set(false);
 ```
 
-###### Binding UI => Dato
+##### Binding UI => Dato
 
 1. Android-databinding mette a disposizione per alcune classe di oggetti UI l'operatore `=`:
 ```xml
@@ -162,6 +162,20 @@ L'injection viene realizzata tramite le librerie [Dagger2](https://github.com/go
 
 I providers, qui definiti all'interno del package `com.tiknil.boilerplatemvvm.services`, hanno un costruttore che, se necessario, viene definito con l'annotation `@Inject` in modo tale da esplicitare a dagger la necessità di injettare gli oggetti passati.
 
+### Services
+
+Chiamiamo **Service** una classe dedicata all'esecuzione di _business logic_ legata a una stesso ambito iniettabile come dipendenza ove necessario, tramite corrispettivo **ServiceProtocol**.
+
+Esempi dei più utilizzati:
+
+* **ApiService:** dedicato alle chiamate network alle API del server.
+* **CacheService:** dedicato alla storicizzazione di dati (database, portachiavi, file).
+* **LocationService:** dedicato alla gestione del geoposizionamento dell'utente.
+* **BluetoothService:** dedicato alla gestione della comunicazione bluetooth.
+* **WebSocketService:** dedicato alla comunicazione via WebSocket.
+* _ecc..._
+
+
 ### Cartelle di progetto
 
 La cartella contenente il codice sorgente dell'app avrà la seguente struttura:
@@ -181,17 +195,3 @@ La cartella contenente il codice sorgente dell'app avrà la seguente struttura:
     |-- fonts             # Contiene i file dei fonts
 |-- res                   # Cartella di resources: color, drawable, layout,...
 ```
-
-## Services
-
-Chiamiamo **Service** una classe dedicata all'esecuzione di _business logic_ legata a una stesso ambito iniettabile come dipendenza ove necessario, tramite corrispettivo **ServiceProtocol**.
-
-Esempi dei più utilizzati:
-
-* **ApiService:** dedicato alle chiamate network alle API del server.
-* **CacheService:** dedicato alla storicizzazione di dati (database, portachiavi, file).
-* **DataService:** dedicato all'utilizzo di dati temporanei disponibili solo in fase di esecuzione.
-* **LocationService:** dedicato alla gestione del geoposizionamento dell'utente.
-* **BluetoothService:** dedicato alla gestione della comunicazione bluetooth.
-* **WebSocketService:** dedicato alla comunicazione via WebSocket.
-* _ecc..._
