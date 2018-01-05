@@ -21,7 +21,7 @@ $boilerplate_project_name = "TiknilBoilerplateMVVM"
 $boilerplate_package_name = "com.tiknil.boilerplatemvvm"
 $boilerplate_application_class = "TiknilBoilerplateMVVMApp.java"
 $boilerplate_fonts_class = "TiknilBoilerplateMVVMFonts.java"
-$boilerplate_contants_class = "TiknilBoilerplateMVVMConstants.java"
+$boilerplate_constants_class = "TiknilBoilerplateMVVMConstants.java"
 $boilerplate_api_class = "TiknilBoilerplateMVVMApi.java"
 $boilerplate_description = "TiknilBoilerplateMVVM"
 ##
@@ -123,15 +123,20 @@ if $confirm == "Y"
 
 	# 2. Elimino la cartella relativa al repo git ma lascio .gitignore
 	FileUtils.rm_rf(options[:project_name] + "/.git")
+	puts "Eliminati i riferimenti al repo git, mantenendo il file .gitignore"
 	# 3. Elimino il file .vcs che indica la presenza di un repo git. Verrà ricreato una volta aperto il progetto quando sarà presente un repo inizializzato
 	FileUtils.rm options[:project_name] + "/.idea/vcs.xml"
-	# Elimino il file TiknilBoilerplate.iml che non serve più
+	puts "Eliminati i riferimenti a vcs.xml"
+	# 4. Elimino la cartella .gradle. Verrà ricreata una volta buildato il progetto
+	FileUtils.rm_rf(options[:project_name] + "/.gradle")
+	puts "Eliminati i riferimenti a gradle"
+	# Elimino il file TiknilBoilerplateMVVM.iml che non serve più
 	iml = options[:project_name] + "/" + $boilerplate_project_name + ".iml"
 	if File.exist? iml
 		FileUtils.rm iml
 	end
 
-	puts "Eliminati i riferimenti al repo git, mantenendo il file .gitignore"
+	
 
 	boilerplate_package_name_parts_array = $boilerplate_package_name.split(".")
 
