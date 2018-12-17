@@ -10,15 +10,17 @@ import com.tiknil.boilerplatemvvm.services.api.IApiService;
 import com.tiknil.boilerplatemvvm.services.cache.ICacheService;
 import com.tiknil.boilerplatemvvm.services.fragmentnavigator.IFragmentNavigator;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 /**
  * Classe astratta di base di tutti i view model
  */
-public abstract class AbstractBaseViewModel extends ViewModel {
+public abstract class AbstractBaseViewModel<N> extends ViewModel {
 
     //region Inner enums
     //endregion
@@ -30,13 +32,15 @@ public abstract class AbstractBaseViewModel extends ViewModel {
 
     //region Instance Fields
 
-    protected final Context context;
+    protected final WeakReference<Context> context;
     protected final IActivityNavigator activityNavigator;
     protected final IFragmentNavigator fragmentNavigator;
     protected final IApiService apiService;
     protected final ICacheService cacheService;
-    protected Activity activityReference;
+    protected WeakReference<Activity> activityReference;
     protected List<Disposable> disposables = new ArrayList<>();
+
+    private N mNavigator;
 
     //endregion
 
@@ -48,7 +52,7 @@ public abstract class AbstractBaseViewModel extends ViewModel {
     //region Constructors / Lifecycle
 
     public AbstractBaseViewModel(Context context, IActivityNavigator activityNavigator, IFragmentNavigator fragmentNavigator, IApiService apiService, ICacheService cacheService) {
-        this.context = context;
+        this.context = new WeakReference<>(context);
         this.activityNavigator = activityNavigator;
         this.fragmentNavigator = fragmentNavigator;
         this.apiService = apiService;
@@ -60,12 +64,16 @@ public abstract class AbstractBaseViewModel extends ViewModel {
 
     //region Custom accessors
 
-    public IActivityNavigator getActivityNavigator() {
-        return activityNavigator;
+    public void setActivityNavigator(N navigator) {
+        this.mNavigator = navigator;
+    }
+
+    public N getActivityNavigator() {
+        return mNavigator;
     }
 
     public Context getContext() {
-        return context;
+        return context.get();
     }
 
     public String getString(@StringRes int resId) {
@@ -85,11 +93,11 @@ public abstract class AbstractBaseViewModel extends ViewModel {
     }
 
     public Activity getActivityReference() {
-        return activityReference;
+        return activityReference != null ? activityReference.get() : null;
     }
 
     public void setActivityReference(Activity activityReference) {
-        this.activityReference = activityReference;
+        this.activityReference = new WeakReference<>(activityReference);
     }
 
     //endregion
@@ -101,7 +109,13 @@ public abstract class AbstractBaseViewModel extends ViewModel {
      * Metodo chiamato quando la view esegue il metodo onCreate, se necessario va eseguito l'override nelle classe figlie
      */
 
-    public void onCreated() {}
+    public void onCreated() {
+        if (getContext() != null && getApiService() != null && getCacheService() != null && getFragmentNavigator() != null) {
+            setupBindingChains();
+        } else {
+            Timber.e("IMPOSSIBILE AVVIARE IL SETUP DEL VIEWMODEL: UN OGGETTO INGETTATO E' NULL");
+        }
+    }
 
     /**
      * Metodo chiamato quando la view viene visualizzata, se necessario va eseguito l'override nelle classe figlie

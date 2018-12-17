@@ -60,6 +60,7 @@ public abstract class AbstractBaseActivity<T extends ViewDataBinding, V extends 
         performDataBinding();
         ((TiknilBoilerplateMVVMApp) getApplicationContext()).setCurrentActivity(this);
         getViewModel().onCreated();
+        getViewModel().setActivityNavigator(this);
         getViewModel().setActivityReference(this);
     }
 
@@ -73,11 +74,13 @@ public abstract class AbstractBaseActivity<T extends ViewDataBinding, V extends 
     @Override
     protected void onResume() {
         ((TiknilBoilerplateMVVMApp) getApplicationContext()).setCurrentActivity(this);
+        getViewModel().onViewAppear();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
+        getViewModel().onViewDisappear();
         clearActivityReferences();
         super.onPause();
     }

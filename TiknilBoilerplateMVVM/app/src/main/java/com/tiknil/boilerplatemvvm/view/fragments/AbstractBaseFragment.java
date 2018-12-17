@@ -52,9 +52,6 @@ public abstract class AbstractBaseFragment<T extends ViewDataBinding, V extends 
     private V mViewModel;
     private View mRootView;
 
-    protected Typeface regular = null;
-    protected Typeface bold = null;
-
     protected boolean isViewAppeared = false;
     protected Object params;
     protected boolean keyboardModeResizingView = false;
@@ -83,8 +80,6 @@ public abstract class AbstractBaseFragment<T extends ViewDataBinding, V extends 
         mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
         mRootView = mViewDataBinding.getRoot();
 
-        ButterKnife.bind(this, mRootView);
-
         return mRootView;
     }
 
@@ -95,9 +90,6 @@ public abstract class AbstractBaseFragment<T extends ViewDataBinding, V extends 
         mViewModel.onCreated();
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
         mViewDataBinding.executePendingBindings();
-
-        bold = TiknilBoilerplateMVVMFonts.getBoldTypeface(getActivity());
-        regular = TiknilBoilerplateMVVMFonts.getRegularTypeface(getActivity());
 
         setupUI();
         setupBinding();
@@ -186,28 +178,6 @@ public abstract class AbstractBaseFragment<T extends ViewDataBinding, V extends 
     public void hideKeyboard() {
         if (getActivity() != null && getActivity() instanceof AbstractBaseActivity) {
             ((AbstractBaseActivity) getActivity()).hideKeyboard();
-        }
-    }
-
-    /**
-     * Setta il font Regular dell'app all'array di TextView passato come argomento
-     *
-     * @param args array di TextView
-     */
-    public void setReguralFontToTextViews(TextView[] args) {
-        for (TextView textView : args) {
-            if (textView != null) textView.setTypeface(regular);
-        }
-    }
-
-    /**
-     * Setta il font Bold dell'app all'array di TextView passato come argomento
-     *
-     * @param args array di TextView
-     */
-    public void setBoldFontToTextViews(TextView[] args) {
-        for (TextView textView : args) {
-            if (textView != null) textView.setTypeface(bold);
         }
     }
 
