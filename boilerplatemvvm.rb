@@ -125,8 +125,10 @@ if $confirm == "Y"
 	FileUtils.rm_rf(options[:project_name] + "/.git")
 	puts "Eliminati i riferimenti al repo git, mantenendo il file .gitignore"
 	# 3. Elimino il file .vcs che indica la presenza di un repo git. Verrà ricreato una volta aperto il progetto quando sarà presente un repo inizializzato
-	FileUtils.rm options[:project_name] + "/.idea/vcs.xml"
-	puts "Eliminati i riferimenti a vcs.xml"
+	if File.exist? options[:project_name] + "/.idea/vcs.xml"
+		FileUtils.rm options[:project_name] + "/.idea/vcs.xml"
+		puts "Eliminati i riferimenti a vcs.xml"
+	end
 	# 4. Elimino la cartella .gradle. Verrà ricreata una volta buildato il progetto
 	FileUtils.rm_rf(options[:project_name] + "/.gradle")
 	puts "Eliminati i riferimenti a gradle"

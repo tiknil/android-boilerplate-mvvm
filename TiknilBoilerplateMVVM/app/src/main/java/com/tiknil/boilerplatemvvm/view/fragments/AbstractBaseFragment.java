@@ -2,7 +2,6 @@ package com.tiknil.boilerplatemvvm.view.fragments;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -11,9 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.TextView;
 
-import com.tiknil.boilerplatemvvm.utils.TiknilBoilerplateMVVMFonts;
 import com.tiknil.boilerplatemvvm.utils.ThreadUtils;
 import com.tiknil.boilerplatemvvm.view.activities.AbstractBaseActivity;
 import com.tiknil.boilerplatemvvm.viewmodel.AbstractBaseViewModel;
@@ -27,7 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
 /**
