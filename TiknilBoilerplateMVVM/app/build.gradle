@@ -6,7 +6,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.25.1'
+        classpath 'io.fabric.tools:gradle:1.27.0'
     }
 }
 
@@ -29,7 +29,7 @@ android {
         }
     }
     compileSdkVersion 27
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.tiknil.boilerplatemvvm"
         minSdkVersion 19
@@ -70,98 +70,98 @@ android {
     }
 }
 
-def supportLibraryVersion = '27.0.0'
-def googlePlayVersion = '11.6.0'
+def supportLibraryVersion = '27.1.1'
+def googlePlayVersion = '16.0.0'
 def retrofitVersion = '2.3.0'
 def rxbinding2Version = '2.0.0'
 def okHttpClientVersion = '3.6.0'
-def lifecycleVersion = '1.0.0'
-def daggerVersion = '2.12'
+def lifecycleVersion = '1.1.1'
+def daggerVersion = '2.15'
 def butterKnifeVersion = '8.8.1'
 
 dependencies {
 
     // Permette di importare automaticamente i .jar che si inseriscono nella cartella "libs" del progetto
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    compile "com.google.code.gson:gson:2.2.2"
+    implementation "com.google.code.gson:gson:2.2.2"
     // Android Support
 
     // Per poter utilizzare dei componenti gestiti da tutti gli smartphone con versioni Android non recenti (https://developer.android.com/topic/libraries/support-library/index.html?hl=id)
-    compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
-    compile "com.android.support:support-compat:${supportLibraryVersion}"
+    implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    implementation "com.android.support:support-compat:${supportLibraryVersion}"
 
     // Per avere una versione migliore e avanzata di ListView (https://developer.android.com/training/material/lists-cards.html)
-    compile "com.android.support:recyclerview-v7:${supportLibraryVersion}"
+    implementation "com.android.support:recyclerview-v7:${supportLibraryVersion}"
 
     // Sono degli elementi base avanzati proposti da Google per migliorare il feeling dell'utente tra le varie app
-    compile "com.android.support:cardview-v7:${supportLibraryVersion}"
-    compile "com.android.support:percent:${supportLibraryVersion}"
-    compile "com.android.support:design:${supportLibraryVersion}"
+    implementation "com.android.support:cardview-v7:${supportLibraryVersion}"
+    implementation "com.android.support:percent:${supportLibraryVersion}"
+    implementation "com.android.support:design:${supportLibraryVersion}"
 
     // Google Play Services
-    compile "com.google.android.gms:play-services-location:${googlePlayVersion}"
-    compile "com.google.android.gms:play-services-places:${googlePlayVersion}"
-    compile "com.google.android.gms:play-services-maps:${googlePlayVersion}"
+    implementation "com.google.android.gms:play-services-location:${googlePlayVersion}"
+    implementation "com.google.android.gms:play-services-places:${googlePlayVersion}"
+    implementation "com.google.android.gms:play-services-maps:${googlePlayVersion}"
 
     // EventBus per la comunicazione interna tramite eventi
-    compile 'org.greenrobot:eventbus:3.0.0'
+    implementation 'org.greenrobot:eventbus:3.1.1'
 
     // Libreria per semplificazione log
-    compile 'com.jakewharton.timber:timber:4.5.1'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Retrofit2 - richieste HTTP con supporto Rx (Reactive)
-    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
-    compile "com.squareup.retrofit2:retrofit-mock:${retrofitVersion}"
-    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
-    compile "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
-    compile "com.squareup.okhttp3:logging-interceptor:${okHttpClientVersion}"
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:retrofit-mock:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${okHttpClientVersion}"
 
     // Rx Android (Reactive)
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.5'
-    compile 'com.cantrowitz:rxbroadcast:2.0.0'
-    compile 'com.google.guava:guava:22.0-android'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
+    implementation 'com.cantrowitz:rxbroadcast:2.0.0'
+    implementation 'com.google.guava:guava:22.0-android'
 
     // Implementazione Rx (Reactive) degli elementi UI di Android
-    compile "com.jakewharton.rxbinding2:rxbinding:${rxbinding2Version}"
-    compile "com.jakewharton.rxbinding2:rxbinding-support-v4:${rxbinding2Version}"
-    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${rxbinding2Version}"
-    compile "com.jakewharton.rxbinding2:rxbinding-design:${rxbinding2Version}"
-    compile "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:${rxbinding2Version}"
+    implementation "com.jakewharton.rxbinding2:rxbinding:${rxbinding2Version}"
+    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4:${rxbinding2Version}"
+    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${rxbinding2Version}"
+    implementation "com.jakewharton.rxbinding2:rxbinding-design:${rxbinding2Version}"
+    implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:${rxbinding2Version}"
 
     // Libreria per bindare gli observable in base al lifecycle di Activity e Fragment
-    compile 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
-    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
 
     //Viewmodel
-    compile "android.arch.lifecycle:extensions:${lifecycleVersion}"
+    implementation "android.arch.lifecycle:extensions:${lifecycleVersion}"
     annotationProcessor "android.arch.lifecycle:compiler:${lifecycleVersion}"
 
     // Dagger 2
 
     // Dagger core dependencies
     annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
-    compile "com.google.dagger:dagger:${daggerVersion}"
+    implementation "com.google.dagger:dagger:${daggerVersion}"
 
     // Dagger Android dependencies
     annotationProcessor "com.google.dagger:dagger-android-processor:${daggerVersion}"
-    compile "com.google.dagger:dagger-android:${daggerVersion}"
+    implementation "com.google.dagger:dagger-android:${daggerVersion}"
 
     // Dagger Android per l'injection di activity e fragment
-    compile "com.google.dagger:dagger-android-support:${daggerVersion}"
+    implementation "com.google.dagger:dagger-android-support:${daggerVersion}"
 
     // Butterknife per il binding degli elementi grafici nelle classi
-    compile "com.jakewharton:butterknife:${butterKnifeVersion}"
+    implementation "com.jakewharton:butterknife:${butterKnifeVersion}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterKnifeVersion}"
 
     // Crashlytics
-    compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
-        transitive = true
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.7@aar') {
+        transitive = true;
     }
 
     //Librerie per Unit Tests
-    testCompile 'junit:junit:4.12'
-    androidTestCompile 'com.android.support.test:runner:1.0.1'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
