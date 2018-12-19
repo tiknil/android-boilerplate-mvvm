@@ -68,7 +68,7 @@ public class ActivityNavigator implements IActivityNavigator {
      */
     @Override
     public void openActivity(AbstractBaseActivity activity, Class activityToOpen) {
-        openActivity(activity, null);
+        openActivity(activity, activityToOpen, null);
     }
 
     /**

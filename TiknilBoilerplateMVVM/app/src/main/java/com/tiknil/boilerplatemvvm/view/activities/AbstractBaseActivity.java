@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,14 +21,19 @@ import com.trello.rxlifecycle2.components.support.RxFragmentActivity;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import javax.inject.Inject;
+
 import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import timber.log.Timber;
 
 /**
  * Classe astratta di base ereditata da tutte le activity che raggruppa le funzionalità comuni
  * e implementa l'impostazione di base con i view model e il binding con i componenti della view
  */
-public abstract class AbstractBaseActivity<T extends ViewDataBinding, V extends AbstractBaseViewModel> extends RxFragmentActivity {
+public abstract class AbstractBaseActivity<T extends ViewDataBinding, V extends AbstractBaseViewModel> extends RxFragmentActivity implements HasSupportFragmentInjector {
 
     //region Inner enums
     //endregion
@@ -39,7 +45,8 @@ public abstract class AbstractBaseActivity<T extends ViewDataBinding, V extends 
 
     //region Instance Fields
 
-    //UIFields
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentInjector;
 
     private T mViewDataBinding;
     private V mViewModel;
@@ -60,7 +67,6 @@ public abstract class AbstractBaseActivity<T extends ViewDataBinding, V extends 
         performDataBinding();
         ((TiknilBoilerplateMVVMApp) getApplicationContext()).setCurrentActivity(this);
         getViewModel().onCreated();
-        getViewModel().setActivityNavigator(this);
         getViewModel().setActivityReference(this);
     }
 
@@ -211,6 +217,11 @@ public abstract class AbstractBaseActivity<T extends ViewDataBinding, V extends 
         Activity currActivity = ((TiknilBoilerplateMVVMApp) getApplicationContext()).getCurrentActivity();
         if (this.equals(currActivity))
             ((TiknilBoilerplateMVVMApp) getApplicationContext()).setCurrentActivity(null);
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentInjector;
     }
 
     //endregion

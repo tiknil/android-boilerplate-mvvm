@@ -20,7 +20,7 @@ import timber.log.Timber;
 /**
  * Classe astratta di base di tutti i view model
  */
-public abstract class AbstractBaseViewModel<N> extends ViewModel {
+public abstract class AbstractBaseViewModel extends ViewModel {
 
     //region Inner enums
     //endregion
@@ -39,8 +39,6 @@ public abstract class AbstractBaseViewModel<N> extends ViewModel {
     protected final ICacheService cacheService;
     protected WeakReference<Activity> activityReference;
     protected List<Disposable> disposables = new ArrayList<>();
-
-    private N mNavigator;
 
     //endregion
 
@@ -64,12 +62,8 @@ public abstract class AbstractBaseViewModel<N> extends ViewModel {
 
     //region Custom accessors
 
-    public void setActivityNavigator(N navigator) {
-        this.mNavigator = navigator;
-    }
-
-    public N getActivityNavigator() {
-        return mNavigator;
+    public IActivityNavigator getActivityNavigator() {
+        return activityNavigator;
     }
 
     public Context getContext() {
